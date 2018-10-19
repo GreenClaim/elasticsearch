@@ -12,6 +12,7 @@ class ScoutEngine extends Engine
 
     /**
      * Index where the models will be saved.
+     * @deprecated
      * @var string
      */
     protected $index;
@@ -41,7 +42,7 @@ class ScoutEngine extends Engine
             $params['body'][] = [
                 'update' => [
                     '_id' => $model->getKey(),
-                    '_index' => $this->index,
+                    '_index' => $model->searchableAs(),
                     '_type' => $model->searchableAs(),
                 ]
             ];
@@ -70,7 +71,7 @@ class ScoutEngine extends Engine
             $params['body'][] = [
                 'delete' => [
                     '_id' => $model->getKey(),
-                    '_index' => $this->index,
+                    '_index' => $model->searchableAs(),
                     '_type' => $model->searchableAs(),
                 ]
             ];
@@ -121,7 +122,7 @@ class ScoutEngine extends Engine
     protected function performSearch(Builder $builder, array $options = [])
     {
         $params = [
-            'index' => $this->index,
+            'index' => $builder->model->searchableAs(),
             'type' => $builder->model->searchableAs(),
             'body' => [
                 'query' => [
