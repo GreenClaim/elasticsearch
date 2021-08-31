@@ -1,12 +1,9 @@
 <p align="center">
-<a href="https://travis-ci.org/basemkhirat/elasticsearch"><img src="https://travis-ci.org/basemkhirat/elasticsearch.svg?branch=master" alt="Build Status"></a>
+<!-- <a href="https://travis-ci.org/basemkhirat/elasticsearch"><img src="https://travis-ci.org/basemkhirat/elasticsearch.svg?branch=master" alt="Build Status"></a> -->
 <a href="https://packagist.org/packages/basemkhirat/elasticsearch"><img src="https://poser.pugx.org/basemkhirat/elasticsearch/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/basemkhirat/elasticsearch"><img src="https://poser.pugx.org/basemkhirat/elasticsearch/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/basemkhirat/elasticsearch"><img src="https://poser.pugx.org/basemkhirat/elasticsearch/license.svg" alt="License"></a>
 </p>
-
-<p align="center"><img src="http://basemkhirat.com/images/basemkhirat-elasticsearch.png?123"></p>
-
 
 ## Laravel, Lumen and Native php elasticseach query builder to build complex queries using an elegant syntax
 
@@ -990,6 +987,25 @@ ES::type("my_type")->search("hello", function($search){
 	$search->boost(2)->fields(["title" => 2, "content" => 1])
 })->get();
 ```
+
+##### Search with highlight fields
+    
+```php
+$doc = ES::type("my_type")->highlight("title")->search("hello")->first();
+
+# Multiple fields Highlighting is allowed.
+
+$doc = ES::type("my_type")->highlight("title", "content")->search("hello")->first();
+
+# Return all highlights as array using $doc->getHighlights() method.
+
+$doc->getHighlights();
+
+# Also you can return only highlights of specific field.
+
+$doc->getHighlights("title");
+```
+
 
 ##### Return only first record
 
